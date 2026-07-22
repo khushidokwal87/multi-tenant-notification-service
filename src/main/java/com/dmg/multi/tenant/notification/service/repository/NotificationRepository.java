@@ -16,6 +16,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
 	Optional<Notification> findByTenantIdAndIdempotencyKey(Long tenantId, String idempotencyKey);
 
+	List<Notification> findByTenantId(Long tenantId);
+
 	@Query("SELECT n.id FROM Notification n WHERE "
 			+ "(n.status = :scheduled AND n.scheduledTime <= :now) OR "
 			+ "(n.status = :pending AND n.nextRetryAt IS NOT NULL AND n.nextRetryAt <= :now)")
