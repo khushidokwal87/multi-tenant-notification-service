@@ -1,6 +1,6 @@
 package com.dmg.multi.tenant.notification.service.entity;
 
-import com.dmg.multi.tenant.notification.service.enums.Role;
+import com.dmg.multi.tenant.notification.service.enums.AttemptStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,35 +20,29 @@ import lombok.Setter;
 
 @Entity
 @Table(
-	name = "users",
-	uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "tenant_id", "username" }),
-		@UniqueConstraint(columnNames = { "tenant_id", "email" })
-	}
+	name = "notification_attempts",
+	uniqueConstraints = @UniqueConstraint(columnNames = { "notification_id", "attempt_number" })
 )
 @Getter
 @Setter
 @NoArgsConstructor
-public class User extends BaseEntity {
+public class NotificationAttempt extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	private String username;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "notification_id", nullable = false)
+	private Notification notification;
 
 	@Column(nullable = false)
-	private String email;
-
-	@Column(nullable = false)
-	private String password;
+	private int attemptNumber;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private Role role;
+	private AttemptStatus status;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "tenant_id", nullable = false)
-	private Tenant tenant;
+	@Column(columnDefinition = "TEXT")
+	private String errorMessage;
 }

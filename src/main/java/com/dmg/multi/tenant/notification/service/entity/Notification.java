@@ -2,8 +2,8 @@ package com.dmg.multi.tenant.notification.service.entity;
 
 import java.time.Instant;
 
+import com.dmg.multi.tenant.notification.service.enums.Channel;
 import com.dmg.multi.tenant.notification.service.enums.NotificationStatus;
-import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Notification {
+public class Notification extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +66,8 @@ public class Notification {
 	@Column(name = "idempotency_key", nullable = false)
 	private String idempotencyKey;
 
-	@CreationTimestamp
-	@Column(nullable = false, updatable = false)
-	private Instant createdAt;
+	@Column(nullable = false)
+	private int attemptCount;
+
+	private Instant nextRetryAt;
 }

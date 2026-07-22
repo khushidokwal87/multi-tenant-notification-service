@@ -1,6 +1,6 @@
 package com.dmg.multi.tenant.notification.service.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,9 +20,9 @@ public abstract class BaseEntity {
 
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
-	private LocalDateTime createdAt;
+	private Instant createdAt;
 
 	@LastModifiedDate
 	@Column(nullable = false)
-	private LocalDateTime updatedAt;
+	private Instant updatedAt;
 }

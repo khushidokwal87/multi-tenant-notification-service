@@ -1,5 +1,7 @@
 package com.dmg.multi.tenant.notification.service.entity;
 
+import com.dmg.multi.tenant.notification.service.enums.Channel;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ChannelConfig {
+public class ChannelConfig extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
